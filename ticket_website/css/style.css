@@ -1,0 +1,204 @@
+/* إضافة بعض التنسيق العام للصفحة */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* رأس الصفحة */
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+/* تنسيق شريط التنقل (Navigation Bar) */
+nav.navbar {
+    background-color: #f8f9fa;
+    padding: 10px;
+}
+
+.navbar .navbar-brand {
+    color: #007bff;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.navbar .navbar-brand:hover {
+    color: #0056b3;
+}
+
+/* قائمة التذاكر */
+ul.list-group {
+    margin-top: 30px;
+}
+
+.list-group-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.list-group-item span {
+    font-weight: 500;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+input[type="text"], textarea, select {
+    transition: all 0.3s ease;
+    border: 2px solid #ddd;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+input[type="text"]:focus, textarea:focus, select:focus {
+    border-color: #5cb85c;
+    outline: none;
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.icon {
+    transition: transform 0.2s ease;
+}
+
+.icon:hover {
+    transform: rotate(360deg);
+}
+/* تأثيرات الخلفية للنماذج */
+form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* تأثيرات الحقول عند التفاعل */
+input[type="text"]:focus, textarea:focus {
+    background-color: #e9f7ef;
+    box-shadow: 0 0 5px rgba(95, 158, 160, 0.8);
+}
+/* تنسيق الجداول */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+/* زر التحديث والحذف */
+.btn {
+    font-size: 0.9rem;
+    margin-right: 5px;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* التأثيرات المتحركة مع AOS */
+[data-aos="fade-up"] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-out;
+}
+
+[data-aos="fade-up"].aos-animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-aos="fade-left"] {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s ease-out;
+}
+
+[data-aos="fade-left"].aos-animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+[data-aos="fade-right"] {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.5s ease-out;
+}
+
+[data-aos="fade-right"].aos-animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* إضافة بعض الظلال عند التمرير */
+.list-group-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* تصميم النص داخل الحقول */
+h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+/* تخصيص تأثيرات التمرير باستخدام AOS */
+[data-aos="fade-up"] {
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+

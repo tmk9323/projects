@@ -1,0 +1,114 @@
+CREATE DATABASE ticket_db
+USE ticket_db;
+
+----- users table -----
+CREATE TABLE users(
+	user_id INT  PRIMARY KEY IDENTITY(1,1),
+	name VARCHAR(50) NOT NULL,
+    email VARCHAR(100),
+	username VARCHAR(50) NOT NULL,
+	password VARCHAR(255) NOT NULL,
+    role VARCHAR(10) CHECK (role IN ('customer', 'Technician', 'Admin')) NOT NULL,
+    phone VARCHAR(15),
+	status int
+	address VARCHAR(255) NOT NULL,
+);
+SELECT * FROM users
+UPDATE users
+SET status = 1
+WHERE status IS NULL;
+
+
+----- ticket table -----
+CREATE TABLE Tickets (
+    ticket_id INT PRIMARY KEY IDENTITY(1,1),
+    user_id INT,
+    title VARCHAR(200) NOT NULL,
+    description TEXT,
+    status VARCHAR(30) CHECK (status IN('Open', 'In Progress', 'Closed')) DEFAULT 'Open',
+    priority VARCHAR(10) CHECK (priority IN('Low', 'Medium', 'High')) DEFAULT 'Medium',
+    created_at DATETIME DEFAULT GETDATE(),
+    updated_at DATETIME DEFAULT GETDATE(),
+    assigned_to INT, --مسؤولية التذكره الى شخص محدد--
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (assigned_to) REFERENCES users(user_id)
+);
+
+CREATE TRIGGER trg_UpdateTimestamp
+ON Tickets 
+AFTER UPDATE 
+AS
+BEGIN
+	UPDATE Tickets
+	SET updated_at = GETDATE()
+	WHERE ticket_id IN (SELECT DISTINCT ticket_id FROM INSERTED);
+END;
+
+----- insert ensure trigger is work or no -------
+INSERT INTO users (NAME, email, username, PASSWORD, ROLE, phone, ADDRESS)
+	VALUES ('taha', 'taha.moner83@gmail.com', 'tahamoner', '123', 'Admin', NULL, 'hillah');
+
+SELECT * FROM users
+
+INSERT INTO Tickets (USER_ID, title, DESCRIPTION, STATUS, PRIORITY, assigned_to)
+	VALUES (1, 'Test Ticket', 'This is a test description', 'Open', 'Medium', 1);
+
+SELECT * FROM Tickets
+
+UPDATE Tickets
+SET status = 'In Progress'
+WHERE ticket_id=2;
+
+--- techincians table ----
+CREATE TABLE Technicians (
+    technician_id INT PRIMARY KEY IDENTITY(1,1),
+    name VARCHAR(100) NOT NULL,
+    specialization VARCHAR(100), -- work is what ---
+    phone VARCHAR(15),
+    email VARCHAR(100)
+);
+
+--- activity_log table ---
+CREATE TABLE ActivityLog (
+    log_id INT PRIMARY KEY IDENTITY(1,1),
+    ticket_id INT,
+    updated_by INT,
+    change_description TEXT,
+    timestamp DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (ticket_id) REFERENCES Tickets(ticket_id),
+    FOREIGN KEY (updated_by) REFERENCES Users(user_id)
+);
+
+--- area table ---
+CREATE TABLE Areas (
+    area_id INT PRIMARY KEY IDENTITY(1,1),
+    area_name VARCHAR(100) NOT NULL,
+    description TEXT,
+    coordinates VARCHAR(255)
+);
+
+--- ticket_assignment table ---
+CREATE TABLE TicketAssignments (
+    assignment_id INT PRIMARY KEY IDENTITY(1,1),
+    ticket_id INT,
+    technician_id INT,
+    assigned_at DATETIME DEFAULT GETDATE(),
+    completion_date DATETIME,
+    FOREIGN KEY (ticket_id) REFERENCES Tickets(ticket_id),
+    FOREIGN KEY (technician_id) REFERENCES Technicians(technician_id)
+);
+
+CREATE TABLE ActivityUser (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    user_id INT,
+    action VARCHAR(255),
+    timestamp DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+alter TABLE ActivityUser ADD username VARCHAR(255),  -- حفظ اسم المستخدم
+    ip_address VARCHAR(50),  -- عنوان الـ IP
+    device_info VARCHAR(255)  -- معلومات الجهاز أو المتصفح
+
+	SELECT * FROM ActivityUser
+ORDER BY ActivityUser.timestamp DESC;

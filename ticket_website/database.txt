@@ -31,7 +31,7 @@ CREATE TABLE Tickets (
     updated_at DATETIME DEFAULT GETDATE(),
     assigned_to INT, --مسؤولية التذكره الى شخص محدد--
     FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (assigned_to) REFERENCES users(user_id)
+    FOREIGN KEY (assigned_to) REFERENCES Technicians(technician_id)
 );
 
 CREATE TRIGGER trg_UpdateTimestamp
